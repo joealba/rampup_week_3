@@ -4,18 +4,36 @@ require 'rspec'
 #######################################################
 ## YOUR CODE
 def get_dictionary
-  dictionary_list = ('a'..'z').zip(('a'..'z').to_a.reverse)
-  dictionary_list_upper = dictionary_list.collect{ |e| e.map(&:upcase) }
-  Hash[dictionary_list + dictionary_list_upper]
+  dictionary = {} ## Could also write Hash.new
+  letters = ('a'..'z').to_a
+  letter_values = letters.reverse
+
+  letters.each_index do |i|
+    dictionary[letters[i]] = letter_values[i]
+    dictionary[letters[i].upcase] = letter_values[i].upcase
+  end
+
+  dictionary
 end
 
 def encrypt(string)
-  string.chars.map{ |c| get_dictionary.fetch(c, c)}.join
+  encrypted_array = []
+  string.chars.each do |c|
+    encrypted_array << get_dictionary.fetch(c, c)
+  end
+
+  return encrypted_array.join
 end
 
 def decrypt(string)
   dictionary_reversed = get_dictionary.invert
-  string.chars.map { |c| dictionary_reversed.fetch(c, c)}.join
+  decrypted_array = []
+
+  string.chars.each do |c|
+    decrypted_array << dictionary_reversed.fetch(c, c)
+  end
+
+  return decrypted_array.join
 end
 
 
