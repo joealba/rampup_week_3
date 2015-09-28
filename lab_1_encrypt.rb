@@ -3,23 +3,19 @@ require 'rspec'
 
 #######################################################
 ## YOUR CODE
-DICTIONARY = Hash[('a'..'z').zip(('a'..'z').to_a.reverse)]
+def get_dictionary
+  dictionary_list = ('a'..'z').zip(('a'..'z').to_a.reverse)
+  dictionary_list_upper = dictionary_list.collect{ |e| e.map(&:upcase) }
+  Hash[dictionary_list + dictionary_list_upper]
+end
 
 def encrypt(string)
-  string.chars.map do |c|
-    uppercase = c == c.upcase
-    letter = DICTIONARY.fetch(c.downcase, c)
-    uppercase ? letter.upcase : letter
-  end.join
+  string.chars.map{ |c| get_dictionary.fetch(c, c)}.join
 end
 
 def decrypt(string)
-  dictionary_reversed = DICTIONARY.invert
-  string.chars.map do |c|
-    uppercase = c == c.upcase
-    letter = dictionary_reversed.fetch(c.downcase, c)
-    uppercase ? letter.upcase : letter
-  end.join
+  dictionary_reversed = get_dictionary.invert
+  string.chars.map { |c| dictionary_reversed.fetch(c, c)}.join
 end
 
 
