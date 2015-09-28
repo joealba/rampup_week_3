@@ -4,28 +4,22 @@ require 'rspec'
 #######################################################
 ## YOUR CODE
 def get_dictionary(offset)
-  Hash[('a'..'z').zip(('a'..'z').to_a.rotate(offset))]
+  dictionary_list = ('a'..'z').zip(('a'..'z').to_a.rotate(offset))
+  upper_dictionary_list = dictionary_list.collect{ |e| e.map(&:upcase) }
+  Hash[dictionary_list + upper_dictionary_list]
 end
 
 def caesar_encrypt(string, offset)
   dictionary = get_dictionary(offset)
 
-  string.chars.map do |c|
-    uppercase = c == c.upcase
-    letter = dictionary.fetch(c.downcase, c)
-    uppercase ? letter.upcase : letter
-  end.join
+  string.chars.map{ |c| dictionary.fetch(c, c) }.join
 end
 
 def caesar_decrypt(string, offset)
   dictionary = get_dictionary(offset)
   dictionary_reversed = dictionary.invert
 
-  string.chars.map do |c|
-    uppercase = c == c.upcase
-    letter = dictionary_reversed.fetch(c.downcase, c)
-    uppercase ? letter.upcase : letter
-  end.join
+  string.chars.map{ |c| dictionary_reversed.fetch(c, c)}.join
 end
 
 
