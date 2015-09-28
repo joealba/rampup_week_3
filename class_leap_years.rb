@@ -4,11 +4,21 @@ require 'rspec'
 #######################################################
 ## YOUR CODE
 def is_a_leap_year?(year)
-  (year % 4 == 0 && year % 100 > 0) || (year % 100 == 0 && year % 400 == 0)
+  return true if year % 4 == 0 && year % 100 > 0
+  return true if year % 100 == 0 && year % 400 == 0
+  return false
 end
 
 def leap_years_between(start_year, end_year)
-  (start_year..end_year).collect{ |n| is_a_leap_year?(n) ? n : nil }.compact
+  leap_years = []
+
+  (start_year..end_year).each do |n|
+    if is_a_leap_year?(n)
+      leap_years << n
+    end
+  end
+
+  return leap_years
 end
 
 
