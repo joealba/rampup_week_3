@@ -4,26 +4,37 @@ require 'rspec'
 #######################################################
 ## YOUR CODE
 def get_dictionary(offset)
-  Hash[('a'..'z').zip(('a'..'z').to_a...)]
+  Hash[('a'..'z').zip(('a'..'z').to_a.rotate(offset))]
 end
 
 def caesar_encrypt(string, offset)
   dictionary = get_dictionary(offset)
 
+  string.chars.map do |c|
+    uppercase = c == c.upcase
+    letter = dictionary.fetch(c.downcase, c)
+    uppercase ? letter.upcase : letter
+  end.join
 end
 
 def caesar_decrypt(string, offset)
   dictionary = get_dictionary(offset)
+  dictionary_reversed = dictionary.invert
 
+  string.chars.map do |c|
+    uppercase = c == c.upcase
+    letter = dictionary_reversed.fetch(c.downcase, c)
+    uppercase ? letter.upcase : letter
+  end.join
 end
 
 
 #######################################################
 ## MAIN SECTION -- WHAT YOU WANT TO RUN
 
-# encrypted = caesar_encrypt("I do not like Caesar salad", 2)
-# puts "ENCRYPTED: #{encrypted}"
-# puts "DECRYPTED: #{caesar_decrypt(encrypted, 2)}"
+encrypted = caesar_encrypt("I do not like Caesar salad", 2)
+puts "ENCRYPTED: #{encrypted}"
+puts "DECRYPTED: #{caesar_decrypt(encrypted, 2)}"
 
 
 #######################################################
