@@ -17,23 +17,23 @@ def get_dictionary
 end
 
 def encrypt(string)
-  encrypted_array = []
+  encrypted_string = ''
   string.chars.each do |c|
-    encrypted_array << get_dictionary.fetch(c, c)
+    encrypted_string << get_dictionary.fetch(c, c)
   end
 
-  return encrypted_array.join
+  return encrypted_string
 end
 
 def decrypt(string)
   dictionary_reversed = get_dictionary.invert
-  decrypted_array = []
+  decrypted_string = ''
 
   string.chars.each do |c|
-    decrypted_array << dictionary_reversed.fetch(c, c)
+    decrypted_string << dictionary_reversed.fetch(c, c)
   end
 
-  return decrypted_array.join
+  return decrypted_string
 end
 
 
