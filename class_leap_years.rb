@@ -4,7 +4,7 @@ require 'rspec'
 #######################################################
 ## YOUR CODE
 def is_a_leap_year?(year)
-  (year % 4 == 0) && ...
+  (year % 4 == 0 && year % 100 > 0) || year % 400 == 0
 end
 
 def leap_years_between(start_year, end_year)
@@ -29,6 +29,14 @@ RSpec.describe "leap year exercise" do
 
     it "knows that the year that Back to the Future was released was NOT a leap year" do
       expect(is_a_leap_year?(1985)).to eq false
+    end
+
+    it "says 1600 is a leap year" do
+      expect(is_a_leap_year?(1600)).to eq true
+    end
+
+    it "says 1800 is not a leap year" do
+      expect(is_a_leap_year?(1800)).to eq false
     end
   end
 
